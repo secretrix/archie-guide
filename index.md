@@ -1,37 +1,69 @@
-## Welcome to GitHub Pages
+# Arch Installation Quick Guide
 
-You can use the [editor on GitHub](https://github.com/Sarthak2319/archie-guide/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Get SSH Up and Running on the liveCD
+- Connect your phone via USB and turn on USB tethering
+- `pacman -S networkmanager && systemctl start NetworkManager && nmtui`
+- `nmcli && ssh-keygen`
+- ssh (`ip provided by nmcli`)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Assuming you've already partitioned by this point according to your configuration
+- `mount /dev/sdaX /mnt && mkdir /mnt/boot && mount /dev/sdaX /mnt/boot/`
 
-### Markdown
+- Install packages 
+`
+pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware grub os-prober efibootmgr ntfs-3g irqbalance sshd bash-completion fish git zsh bat sudo doas neovim nano networkmanager ttf-indic-otf noto-fonts noto-fonts-cjk noto-fonts-emoji man-db texinfo bpytop htop neofetch xsettingsd youtube-dl intel-media-driver libvdpau-va-gl libva-utils intel-gpu-tools libva-intel-driver pipewire pipewire-pulse bluez-utils pipewire-zeroconf bluez flatpak tlp pavucontrol i3-gaps xorg-xinit xorg-server xorg-xrandr kitty i3status-rs feh python-pywal dmenu light playerctl xdg-user-data-dirs-gtk xdg-user-data-dirs lxqt-policykit-agent dex firefox lollypop mpv blueman flameshot gvfs pcmanfm
+`
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Lockscreen and AUR
+- TODO
 
-```markdown
-Syntax highlighted code block
+Generate Fstab
+- `fstabgen -U /mnt >> /mnt/etc/fstab`
 
-# Header 1
-## Header 2
-### Header 3
+Chroot into Arch Linux
+- `arch-chroot /mnt`
 
-- Bulleted
-- List
+Switch shell to Fish because it's simpler
+- `fish`
 
-1. Numbered
-2. List
+Set your time
+- `timedatectl set-ntp true`
+- `ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime`
+- `hwclock --systohc`
 
-**Bold** and _Italic_ and `Code` text
+Generate Localisation
+- `nano /etc/locale.gen && locale-gen `(uncomment `en_US.UTF-8`)
 
-[Link](url) and ![Image](src)
+Export Localisation
+- `nano /etc/locale.conf` (Add the following lines)
+```
+export LANG="en_US.UTF-8"
+export LC_COLLATE="C"
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Install and Configure bootloader/GRUB
+- `grub-install --target=x86_64-efi --efi-directory=/boot --removable && grub-mkconfig -o /boot/grub/grub.cfg`
 
-### Jekyll Themes
+Set Hostname
+- `nano /etc/hostname`
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Sarthak2319/archie-guide/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Set Hosts
+- `nano /etc/hosts` 
+```
+127.0.0.1        localhost
+::1              localhost
+127.0.1.1        myhostname.localdomain  myhostname
+```
+ 
+ Enable Services
+- `systemctl enable NetworkManager`
+- `systemctl enable sshd`
+- `systemctl enable tlp`
+- `systemctl enable irqbalance`
+- `systemctl enable bluetooth`
 
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+ Restart
+ - `exit`
+ - `exit`
+ - `umount -Rl /mnt`
+ - `reboot`
