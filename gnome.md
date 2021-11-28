@@ -1,4 +1,4 @@
-# Arch Installation Quick Guide
+# Arch Installation Quick Guide (GNOME Edition)
 
 Get SSH Up and Running on the liveCD
 - Connect your phone via USB and turn on USB tethering
@@ -11,11 +11,7 @@ Assuming you've already partitioned by this point according to your configuratio
 
 - Install packages 
 `
-pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware grub os-prober efibootmgr ntfs-3g irqbalance sshd bash-completion fish git zsh bat sudo doas neovim nano networkmanager ttf-indic-otf noto-fonts noto-fonts-cjk noto-fonts-emoji man-db texinfo bpytop htop neofetch xsettingsd youtube-dl intel-media-driver libvdpau-va-gl libva-utils intel-gpu-tools libva-intel-driver pipewire pipewire-pulse bluez-utils pipewire-zeroconf bluez flatpak tlp pavucontrol i3-gaps xorg-xinit xorg-server xorg-xrandr kitty i3status-rs feh python-pywal dmenu light playerctl xdg-user-data-dirs-gtk xdg-user-data-dirs lxqt-policykit-agent dex firefox lollypop mpv blueman flameshot gvfs pcmanfm
-`
-
-Lockscreen and AUR
-- TODO
+pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware grub os-prober efibootmgr ntfs-3g sshd git fish sudo doas neovim nano networkmanager ttf-indic-otf noto-fonts noto-fonts-cjk noto-fonts-emoji man-db texinfo btop htop neofetch xsettingsd libva-intel-driver pipewire pipewire-pulse pavucontrol xorg-server xorg-xrandr kitty xdg-user-data-dirs-gtk gnome-shell gnome-control-center gnome-tweaks nautilus gdm firefox code eog picard lollypop mpv flameshot`
 
 Generate Fstab
 - `fstabgen -U /mnt >> /mnt/etc/fstab`
@@ -58,8 +54,6 @@ Set Hosts
  Enable Services
 - `systemctl enable NetworkManager`
 - `systemctl enable sshd`
-- `systemctl enable tlp`
-- `systemctl enable irqbalance`
 - `systemctl enable bluetooth`
 
  Restart
