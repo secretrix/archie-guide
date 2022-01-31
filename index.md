@@ -10,8 +10,11 @@ Assuming you've already partitioned by this point according to your configuratio
 - `mount /dev/sdaX /mnt && mkdir /mnt/boot && mount /dev/sdaX /mnt/boot/`
 
 - Install packages for a GNOME-based desktop 
+
 `pacstrap /mnt base base-devel linux-zen linux-firmware grub openssh git fish sudo doas neovim nano networkmanager ttf-indic-otf noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-hannom man-db texinfo btop pipewire pipewire-pulse pavucontrol xorg-server xorg-xrandr kitty xdg-user-data-dirs-gtk gnome-shell gnome-control-center gnome-tweaks nautilus gdm flameshot`
-or for an i3-based desktop
+
+- or for an i3-based desktop
+
 `pacstrap /mnt base base-devel linux-zen linux-firmware grub openssh fish git sudo doas neovim nano networkmanager ttf-indic-otf noto-fonts wqy-microhei ttf-baekmuk otf-ipafont ttf-hannom noto-fonts-emoji man-db texinfo pipewire pipewire-pulse pavucontrol i3-gaps xorg-xinit xorg-server xorg-xrandr kitty i3status-rs feh dmenu light playerctl xdg-user-data-dirs-gtk xdg-user-data-dirs lxsession-gtk3 flameshot gvfs pcmanfm xarchiver unzip`
 
 
